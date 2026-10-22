@@ -1,0 +1,134 @@
+/* 投资理财页样式（与 dashboard 深色主题一致） */
+
+    .inv-topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .inv-stats {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+    .inv-stat {
+      background: var(--panel, rgba(255,255,255,.04));
+      border: 0.5px solid var(--border, rgba(255,255,255,.12));
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+    .inv-stat-label { font-size: 12px; opacity: .65; }
+    .inv-stat-value { font-size: 16px; font-weight: 500; margin-top: 2px; }
+    .inv-stat-sub { font-size: 11px; opacity: .6; margin-top: 2px; }
+    .inv-toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .inv-quote-status { font-size: 12px; opacity: .62; white-space: nowrap; }
+    .inv-btn {
+      border: 0.5px solid var(--border, rgba(255,255,255,.16));
+      background: transparent;
+      color: inherit;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .inv-btn.primary {
+      background: #1D9E75;
+      border-color: #1D9E75;
+      color: #EAF5F0;
+    }
+    .inv-btn:disabled { opacity: .5; cursor: default; }
+
+    .inv-category, .inv-account { margin-top: 14px; }
+    .inv-category-head, .inv-account-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .inv-category-name { font-size: 15px; font-weight: 500; }
+    .inv-account-name { font-size: 14px; font-weight: 500; }
+    .inv-account {
+      border: 0.5px solid var(--border, rgba(255,255,255,.12));
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: var(--panel, rgba(255,255,255,.03));
+      overflow-x: auto;
+    }
+    .inv-table { width: 100%; min-width: 900px; table-layout: fixed; border-collapse: collapse; font-size: 13px; }
+    .inv-table th, .inv-table td { padding: 7px 8px; text-align: left; overflow: hidden; text-overflow: ellipsis; }
+    .inv-table .col-asset { width: 19%; }
+    .inv-table .col-qty { width: 8%; }
+    .inv-table .col-money { width: 12%; }
+    .inv-table .col-profit { width: 14%; }
+    .inv-table .col-actions { width: 18%; }
+    .inv-table thead th { font-weight: 400; opacity: .6; border-bottom: 0.5px solid var(--border, rgba(255,255,255,.12)); }
+    .inv-table thead th:nth-child(n+2):not(:last-child) { text-align: right; }
+    .inv-table tbody tr + tr td { border-top: 0.5px solid var(--border, rgba(255,255,255,.08)); }
+    .inv-table .num { text-align: right; font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: nowrap; }
+    .inv-asset-name { font-weight: 500; }
+    .inv-code { margin-left: 6px; font-size: 11px; opacity: .55; }
+    .inv-cny-equivalent { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; font-weight: 400; }
+    .inv-actions { white-space: nowrap; text-align: right; }
+    .inv-empty { padding: 10px 8px; opacity: .55; font-size: 13px; }
+    .inv-add-asset-row { margin-top: 6px; }
+    .inv-link {
+      background: none;
+      border: none;
+      color: #5DCAA5;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0 2px;
+    }
+    .inv-link.danger { color: #F09595; }
+    .pos { color: #F09595; }
+    .neg { color: #5DCAA5; }
+    .muted { opacity: .6; font-size: 12px; }
+
+    .inv-form {
+      border: 0.5px solid var(--border, rgba(255,255,255,.14));
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      background: var(--panel, rgba(255,255,255,.04));
+      display: grid;
+      gap: 8px;
+    }
+    .inv-form h4 { margin: 0; font-size: 14px; font-weight: 500; }
+    .inv-form label { display: grid; gap: 3px; font-size: 12px; opacity: .9; }
+    .inv-form input, .inv-form select {
+      background: var(--bg-input, rgba(255,255,255,.06));
+      border: 0.5px solid var(--border, rgba(255,255,255,.16));
+      color: inherit;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+    .inv-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .inv-form-actions { display: flex; gap: 8px; margin-top: 4px; }
+    .inv-hint { font-size: 12px; opacity: .6; }
+
+    .inv-chart-panel {
+      border: 0.5px solid var(--border, rgba(255,255,255,.14));
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      background: var(--panel, rgba(255,255,255,.03));
+    }
+    .inv-chart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+    .inv-chart-tools { display: flex; gap: 8px; align-items: center; }
+    .inv-chart-panel canvas { width: 100%; height: auto; display: block; }
+
+    @media (max-width: 900px) {
+      .inv-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
