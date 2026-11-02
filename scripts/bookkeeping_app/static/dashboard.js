@@ -1840,7 +1840,7 @@
     }
 
     function chartFont(size, weight = 500) {
-      return `${weight} ${size}px "Times New Roman", Times, FangSong, STFangsong, serif`;
+      return `${weight} ${size}px ui-monospace, SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace`;
     }
 
     function prepareCanvas(canvas, cssWidth, cssHeight, displayWidth = cssWidth, displayHeight = cssHeight) {
@@ -1863,12 +1863,12 @@
       return {width: size, height: size};
     }
 
-    function textPill(ctx, text, x, y, align, color) {
-      ctx.font = chartFont(11);
+    function textPill(ctx, text, x, y, align, color, size = 11, weight = 500) {
+      ctx.font = chartFont(size, weight);
       const metrics = ctx.measureText(text);
       const width = metrics.width + 12;
-      const height = 18;
-      const left = align === 'right' ? x - width : x;
+      const height = size + 7;
+      const left = align === 'right' ? x - width : align === 'center' ? x - width / 2 : x;
       roundedRect(ctx, left, y - height + 4, width, height, 5);
       ctx.fillStyle = cssVar('--panel');
       ctx.globalAlpha = .94;
@@ -1876,7 +1876,7 @@
       ctx.globalAlpha = 1;
       ctx.fillStyle = color;
       ctx.textAlign = align;
-      ctx.fillText(text, x + (align === 'right' ? -6 : 6), y);
+      ctx.fillText(text, x + (align === 'right' ? -6 : align === 'center' ? 0 : 6), y);
     }
 
     function roundedRect(ctx, x, y, width, height, radius) {
@@ -1992,7 +1992,7 @@
       return document.body.dataset.theme === 'dark' ? 'rgba(255,255,255,.025)' : 'rgba(255,255,255,.42)';
     }
 
-    const pieColors = ['#0e6f5c', '#a83f2d', '#2459a6', '#8a5a16', '#6f4aa8', '#18704b', '#b45c38', '#557a2f', '#8f3f67', '#5f6f7a'];
+    const pieColors = ['#2dd4bf', '#5b8def', '#f5b84d', '#a78bfa', '#4ade80', '#f472b6', '#38bdf8', '#fb923c', '#94a3b8', '#818cf8'];
 
     function drawPie(canvasId, rows, tone, progress = 1) {
       const canvas = $(canvasId);
@@ -2043,10 +2043,8 @@
         });
         start += percent * Math.PI * 2 * progress;
       });
-      ctx.fillStyle = toneColor(tone);
-      ctx.font = chartFont(22, 800);
-      ctx.textAlign = 'center';
-      ctx.fillText(money(total * progress), cx, cy + 8);
+      // 中心合计：垫一块面板色底板，避免红绿字压在环上糊掉
+      textPill(ctx, money(total * progress), cx, cy + 8, 'center', toneColor(tone), 22, 800);
       if (progress > .98) drawPieLabels(ctx, {width, height}, labels.filter(label => label.percent >= .035));
     }
 
@@ -3864,7 +3862,8 @@
     $('categoryRuleType').onchange = () => {
       $('newCategoryMajor').dataset.catType = $('categoryRuleType').value;
     };
-    applyTheme(localStorage.getItem('bookkeeping.theme') === 'dark');
+    // 默认暗色终端主题；用户切过「浅色」则尊重其选择
+    applyTheme(localStorage.getItem('bookkeeping.theme') !== 'light');
     applyColorMode(localStorage.getItem('bookkeeping.colorInverted') === 'true');
     $('search').oninput = () => {
       entryPage = 1;

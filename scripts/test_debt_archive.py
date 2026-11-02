@@ -128,3 +128,23 @@ assert row["archived"] == 1, "init_db 重复执行不应重置归档状态"
 conn.close()
 
 print("test_debt_archive: 12 组断言全部通过")
+
+# ---- 13. 归档快照：借款型本金未手填时，从借入流水（缓冲账户转出）推导本金 ----
+bk.set_account("测试借款", 0, kind="liability")
+bk.insert_entry({"transaction_time": "2026-10-01 10:00:00", "type": "转账", "category": "转账", "amount": 6500, "account": "测试借款", "target_account": "余额", "transaction_object": "借入未填本金"})
+bk.insert_entry({"transaction_time": "2026-10-02 10:00:00", "type": "转账", "category": "转账", "amount": 3000, "account": "余额", "target_account": "测试借款", "transaction_object": "还款一"})
+bk.insert_entry({"transaction_time": "2026-10-03 10:00:00", "type": "转账", "category": "转账", "amount": 3500, "account": "余额", "target_account": "测试借款", "transaction_object": "还款二"})
+out = bk.set_account_archived("测试借款", True)
+assert out["principal_cents"] == 650000, out
+assert out["repay_cents"] == 650000, out
+assert out["interest_cents"] == 0, out
+bk.set_account_archived("测试借款", False)
+
+# 无借入流水时不瞎猜：本金保持 NULL
+bk.set_account("测试借款二", 0, kind="liability")
+out2 = bk.set_account_archived("测试借款二", True)
+assert out2["principal_cents"] is None, out2
+assert out2["interest_cents"] is None, out2
+bk.set_account_archived("测试借款二", False)
+
+print("test_debt_archive: 14 组断言全部通过")

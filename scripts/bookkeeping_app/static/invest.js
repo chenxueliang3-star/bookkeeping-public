@@ -264,8 +264,13 @@
 
   /* ------------------------------------------------------ 图表 */
 
-  const UP = '#E24B4A';   // 涨：红
-  const DOWN = '#1D9E75'; // 跌：绿
+  // 涨跌色跟随主题变量（红涨绿跌），取不到时回退到默认值
+  function themeColor(name, fallback) {
+    const v = getComputedStyle(document.body).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+  const UP = () => themeColor('--red', '#E24B4A');   // 涨：红
+  const DOWN = () => themeColor('--green', '#1D9E75'); // 跌：绿
 
   function showChartPanel(title, subtitle) {
     const panel = $('invChartPanel');
@@ -317,7 +322,7 @@
     klines.forEach((k, i) => {
       const cx = padL + step * i + step / 2;
       const up = k.close >= k.open;
-      const color = up ? UP : DOWN;
+      const color = up ? UP() : DOWN();
       ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(cx, y(k.high)); ctx.lineTo(cx, y(k.low)); ctx.stroke();
       const top = y(Math.max(k.open, k.close)), bot = y(Math.min(k.open, k.close));
@@ -367,10 +372,10 @@
       ctx.stroke(); ctx.setLineDash([]);
     };
     line('cost_cents', 'rgba(136,135,128,.9)', [4, 3]);
-    line('market_cents', '#1D9E75');
+    line('market_cents', DOWN());
     ctx.fillStyle = 'rgba(128,128,128,.8)'; ctx.textAlign = 'center';
     [0, Math.floor(points.length / 2), points.length - 1].forEach(i => ctx.fillText(points[i].date.slice(5), x(i), h - 6));
-    ctx.fillStyle = '#1D9E75'; ctx.textAlign = 'left';
+    ctx.fillStyle = DOWN(); ctx.textAlign = 'left';
     ctx.fillText('— 市值', padL + 6, padT + 12);
     ctx.fillStyle = 'rgba(136,135,128,.9)';
     ctx.fillText('-- 净投入成本', padL + 62, padT + 12);

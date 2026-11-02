@@ -36,9 +36,9 @@
       cursor: pointer;
     }
     .inv-btn.primary {
-      background: #1D9E75;
-      border-color: #1D9E75;
-      color: #EAF5F0;
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-ink);
     }
     .inv-btn:disabled { opacity: .5; cursor: default; }
 
@@ -79,14 +79,14 @@
     .inv-link {
       background: none;
       border: none;
-      color: #5DCAA5;
+      color: var(--accent);
       cursor: pointer;
       font-size: 13px;
       padding: 0 2px;
     }
-    .inv-link.danger { color: #F09595; }
-    .pos { color: #F09595; }
-    .neg { color: #5DCAA5; }
+    .inv-link.danger { color: var(--red); }
+    .pos { color: var(--red); }
+    .neg { color: var(--green); }
     .muted { opacity: .6; font-size: 12px; }
 
     .inv-form {

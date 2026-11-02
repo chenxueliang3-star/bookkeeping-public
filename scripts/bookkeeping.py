@@ -782,6 +782,7 @@ def set_account_archived(name, archived=True):
 
     归档快照（防双计/利息口径，仅借款型+贷款型）：
     - 归档时对借款型/贷款型负债算一次快照三列（本金/Σ还款/总利息=Σ还款−本金），
+      本金未手填时从借入流水推导（缓冲账户转出的转账合计，无借入则保持 NULL）；
       此后展示不再受后续流水影响；principal 未填时 repay 照算、interest 留 NULL；
     - 信用卡型（循环额度，无本金概念）归档不写快照（三列 NULL）；
     - 恢复归档清空三列，继续还款后重新归档即重算。
@@ -801,6 +802,13 @@ def set_account_archived(name, archived=True):
         if archived:
             if row["kind"] == "liability" and not debt_accounts.is_credit_type_row(row):
                 principal = row["principal_cents"]
+                if principal is None:
+                    # 本金未手填时从借入流水推导：借入 = 缓冲账户转出（account=本账户）的转账合计
+                    borrow_out = conn.execute(
+                        "select coalesce(sum(amount_cents), 0) v from entries where type = '转账' and account = ?",
+                        (name,),
+                    ).fetchone()["v"]
+                    principal = int(borrow_out) if borrow_out > 0 else None
                 repay = conn.execute(
                     "select coalesce(sum(amount_cents), 0) v from entries where type = '转账' and target_account = ?",
                     (name,),
@@ -4022,7 +4030,7 @@ def build_parser():
     p.add_argument("--account")
     p.add_argument("--output", help="Write duplicate candidate analysis JSON for review")
 
-    sub.add_parser("refund-auto-link", help="Auto-link refunds to expenses at >=90% confidence")
+    sub.add_parser("refund-auto-link", help="Auto-link refunds to expenses at 90%% confidence or above")
 
     p = sub.add_parser("confirm")
     p.add_argument("id", type=int)

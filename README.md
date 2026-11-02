@@ -1,11 +1,12 @@
 # 📒 Bookkeeping Skill · 让 AI 替你记账
 
-<p align="center">
-  <img alt="Python version" src="https://img.shields.io/badge/python-3.8+-blue.svg">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg">
-  <img alt="Version" src="https://img.shields.io/badge/version-V1-orange.svg">
-  <br>
-  一个为 AI Agent 设计的<b>本地记账 Skill</b> —— 把对账、分类、去重交给 AI，数据永远留在你自己手里。
+<p align="center">  
+  <img alt="Python version" src="https://img.shields.io/badge/python-3.8+-blue.svg">  
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg">  
+  <img alt="Version" src="https://img.shields.io/badge/version-V1-orange.svg">  
+    
+  
+  一个为 AI Agent 设计的<b>本地记账 Skill</b> —— 把对账、分类、去重交给 AI，数据永远留在你自己手里。  
 </p>
 
 作者 **奔跑的猪**。实现上参考了其他开源记账项目，以及鲨鱼记账等软件的产品设计。
@@ -33,17 +34,17 @@
 
 ## ✨ 核心能力
 
-| 能力 | 说明 |
-|------|------|
-| 📥 **多源账单导入** | 直接把支付宝、微信、银行卡导出的账单文件发给 Agent，自动识别格式、清洗、标准化 |
-| 🔁 **智能去重** | 支付宝用银行卡支付和银行卡账单其实是同一笔？跨来源去重，银行流水另做余额链校验 |
-| 🧠 **自动分类与规则学习** | 每次导入都会收集新关键词，缺失分类会询问你并记住规则 |
-| 🎯 **活动花费** | 把多笔流水拉进同一件事（旅行、约会、球赛），看这件事净花了多少；分类统计不受影响 |
-| ↩️ **退款关联** | 退款不是收入。把它挂回原支出后，只记净花费；没花出去的钱不再算支出 |
-| 🏦 **资产管家 + 关联账单** | 现金 / 卡 / 花呗 / 借款分组看净资产；点账户打开该账户全部流水 |
-| 💸 **完整资金动作** | 支出、收入、转账、借入、借出、还款、收款、退款、余额修正 |
-| 📊 **财务看板** | 本地 Dashboard：总览、账单、待确认、资产管家 |
-| 🔒 **隐私优先** | 所有数据存于本地 SQLite，开源仓库不含个人账本 |
+| 能力                 | 说明                                         |
+| ------------------ | ------------------------------------------ |
+| 📥 **多源账单导入**      | 直接把支付宝、微信、银行卡导出的账单文件发给 Agent，自动识别格式、清洗、标准化 |
+| 🔁 **智能去重**        | 支付宝用银行卡支付和银行卡账单其实是同一笔？跨来源去重，银行流水另做余额链校验    |
+| 🧠 **自动分类与规则学习**   | 每次导入都会收集新关键词，缺失分类会询问你并记住规则                 |
+| 🎯 **活动花费**        | 把多笔流水拉进同一件事（旅行、约会、球赛），看这件事净花了多少；分类统计不受影响   |
+| ↩️ **退款关联**        | 退款不是收入。把它挂回原支出后，只记净花费；没花出去的钱不再算支出          |
+| 🏦 **资产管家 + 关联账单** | 现金 / 卡 / 花呗 / 借款分组看净资产；点账户打开该账户全部流水        |
+| 💸 **完整资金动作**      | 支出、收入、转账、借入、借出、还款、收款、退款、余额修正               |
+| 📊 **财务看板**        | 本地 Dashboard：总览、账单、待确认、资产管家                |
+| 🔒 **隐私优先**        | 所有数据存于本地 SQLite，开源仓库不含个人账本                 |
 
 ### 相对市面 App，V1 多出来的三件事
 
@@ -95,7 +96,7 @@
 复制这句话发给 Agent：
 
 ```shell
-帮我安装这个 skill：https://github.com/chenxueliang3-star/bookkeeping-skill.git，仅保留 SKILL.md 和 scripts/
+帮我安装这个 skill：https://github.com/chenxueliang3-star/bookkeeping-skill.git，仅保留 SKILL.md、scripts/ 和 tests/
 ```
 
 ### 2. 首次导入历史账单
@@ -117,6 +118,15 @@ python scripts/bookkeeping.py dashboard
 ```
 
 默认端口 **8765**。浏览器打开提示的本地地址即可。
+
+### 4. 运行测试
+
+```shell
+cd skill
+python -m unittest discover -s tests -v
+```
+
+测试在临时目录建一个空库，不读取真实账本。数据是虚构的账户和商户。
 
 ## 📦 如何获取账单文件？
 
@@ -172,9 +182,9 @@ python scripts/bookkeeping.py dashboard
 
 作者 **奔跑的猪**。有问题、建议或想一起改这个 Skill，欢迎联系：
 
-- 邮箱：[CXL15602604253@163.com](mailto:CXL15602604253@163.com)
+- 邮箱：<CXL15602604253@163.com>
 - 微信：扫描下方二维码添加
 
-<p align="center">
-  <img alt="微信联系方式" src="docs/images/wechat-contact.jpg" width="240">
+<p align="center">  
+  <img alt="微信联系方式" src="docs/images/wechat-contact.jpg" width="240">  
 </p>
